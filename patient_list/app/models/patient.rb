@@ -1,5 +1,10 @@
 class Patient < ActiveRecord::Base
 
+has_many :medications, dependent: :destroy
+belongs_to :doctor
+
+
+
     BLOOD_TYPE_OPTIONS = [
     ["O-", "O-"],
     ["O+", "O+"],
@@ -17,12 +22,7 @@ class Patient < ActiveRecord::Base
   validates :description, presence: true
   validates :gender, presence: true
   validates :blood_type, presence: true
-  validate  :at_least_10
 
-  def at_least_10
-    if self.dob
-      errors.add(:dob, ' : You must be at least 10') if self.dob > 10.years.ago.to_date
-    end
-  end
+  
 
 end

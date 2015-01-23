@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+<%= link_to 'Home Page', root_path %>
+
+<h1>Our Doctors</h1>
+    ||||||||||||
+<% @doctors.each do |doctor| %>
+    ||||||||||||
+    <%= doctor.first_name %>
+    <%= doctor.last_name %>
+    <%= doctor.gender_name %>
+    <%= doctor.specialty %>
+    <%= doctor.biography %>
+
+    <%= link_to 'Show', doctor_path(doctor) %>
+    <%= link_to 'Edit', edit_doctor_path(doctor) %>
+    <%= link_to 'Destroy', doctor, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <br>
+<% end %>
+
+<br>
+
+<%= link_to 'New Doctor', new_doctor_path %>

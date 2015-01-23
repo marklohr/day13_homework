@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
     root 'home#index'
 
-    resources :patients
+    resources :doctors do
+      resources :patients do
+        resources :medications
+      end
+    end
+
+    
+
     
 
 
