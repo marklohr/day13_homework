@@ -1,0 +1,30 @@
+<h1>List of Patients</h1>
+<br>
+<%= link_to "Enter New Patient Data", new_patient_path %>
+<br>
+
+<%= @patients.each do |patient| %>
+
+<strong>Patient Name:</strong>
+    <%= link_to patient.last_name + ", " + patient.first_name, patient_path(patient) %>
+    <br>
+    <strong>DOB:</strong>
+    <%= patient.date_of_birth %>
+    <br>
+    <strong>Description:</strong>
+    <%= patient.description %>
+    <br>
+    <strong>Gender:</strong>
+    <%= patient.gender %>
+    <br>
+    <strong>Blood Type:</strong>
+    <%= patient.blood_type %>
+    <br>
+    <%= link_to "Edit Patient", edit_patient_path(patient) %>
+    |
+    <%= link_to "Delete Patient", patient_path(patient), method: :delete %>
+  
+  <br>
+<% end %>
+
+<%= link_to "Return Home", root_path %>
