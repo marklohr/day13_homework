@@ -1,49 +1,42 @@
 class PatientsController < ApplicationController
-  def show
-    @patient = Patient.find params[:id]
-  end
-
 
   def index
     @patients = Patient.all
   end
+  
+  def show
+    @doctor = Doctor.find params[:doctor_id]
+    @patient = Patient.find params[:id]
+  end
 
   def new
-    @patient = Patient.new
+    @doctor = Doctor.find params[:doctor_id]
+    @patient = @doctor.patients.new
   end
 
   def create
-    @patient = Patient.create patient_params
-      if @patient.save
-      flash[:notice] = 'Patient data was saved successfully.'
-      redirect_to patients_path
-    else
-      flash[:error] = 'Patient data was NOT saved successfully.'
-      render :new
-    end
+    @doctor = Doctor.find params[:doctor_id]
+    @patient = @doctor.patients.create patient_params
+    redirect_to doctor_path(@doctor)
   end
 
   def edit
-    @patient = Patient.find params[:id]
+    @doctor = Doctor.find params[:doctor_id]
+    @patient = @doctor.patients.find params[:id]
   end
 
   def update
-    @patient = Patient.find params[:id]
-    if @patient.update_attributes patient_params
-      flash[:notice] = 'Patient data was updated successfully.'
-      redirect_to patients_path
-    else
-      flash[:notice] = 'Patient data was NOT updated successfully.'
-      render :edit
-    end
-
+    @doctor = Doctor.find params[:doctor_id]
+    @patient = @doctor.patients.find params[:id]
+    redirect_to doctor_path(@doctor)
   end
 
   def destroy
     @patient = Patient.find params[:id]
+    @doctor = Doctor.find params[:doctor_id]
     if @patient.delete
       flash[:notice] = 'Patient data was deleted successfully.'
-      redirect_to patients_path
+      redirect_to doctor_path(@doctor)
     else
       flash[:notice] = 'Patient data was NOT deleted successfully.'
     end
@@ -59,6 +52,10 @@ private
         :gender,
         :blood_type
       ) 
+  end
+
+  def set_doctor
+    @doctor = Doctor.find params[:id]
   end
 
 end

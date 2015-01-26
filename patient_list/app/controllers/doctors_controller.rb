@@ -4,6 +4,11 @@ class DoctorsController < ApplicationController
     @doctors = Doctor.all
   end
 
+  def show
+    set_doctor
+    @patients = @doctor.patients
+  end
+
   def new
     @doctor = Doctor.new
   end
@@ -11,15 +16,37 @@ class DoctorsController < ApplicationController
   def create
     @doctor = Doctor.create doctor_params
     if @doctor.save
-      flash[:notice] = 'Doctor data was saved successfully.'
+      flash[:notice] = 'Physician data was saved successfully.'
       redirect_to doctors_path
     else
-      flash[:error] = 'Doctor data was NOT saved successfully.'
+      flash[:error] = 'Physician data was NOT saved successfully.'
       render :new
     end
   end
+
+  def edit
+    @doctor = Doctor.find params[:id]
+  end
+
+  def update
+    @doctor = Doctor.find params[:id]
+    @doctor.update_attributes doctor_params
+    redirect_to doctors_path
+  end
+
+  def destroy
+    @doctor = Doctor.find params[:id]
+    @doctor.delete
+    redirect_to doctors_path
+  end
+
   
   private
+
+    def set_doctor
+    @doctor = Doctor.find params[:id]
+  end
+
     def doctor_params
       params.require(:doctor).permit(
         :first_name,
@@ -29,4 +56,7 @@ class DoctorsController < ApplicationController
         :specialty,
       ) 
   end
+
+
+
 end

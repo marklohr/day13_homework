@@ -1,15 +1,4 @@
 
-  <% if @doctor.errors.any? %>
-  <p id="notice"><%= notice %></p>
-    <% @doctor.errors.full_messages.each do |message| %>
-      <%= message %>
-      <br>
-    <% end %>
-  <% end %>
-
-
-
-<br>
 <%= form_for @doctor do |f| %>
   <strong><%= f.label :first_name %></strong>
   <%= f.text_field :first_name %>

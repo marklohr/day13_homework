@@ -1,7 +1,7 @@
 class Patient < ActiveRecord::Base
 
-has_many :medications, dependent: :destroy
 belongs_to :doctor
+has_many :medications, dependent: :destroy
 
 
 
